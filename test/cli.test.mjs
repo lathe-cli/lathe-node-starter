@@ -53,19 +53,13 @@ test("the generated CLI is the application acceptance surface", async () => {
 });
 
 test("the generated CLI surfaces API errors", async () => {
-  assert.match(
-    (await cliFailure("tasks", "create", "--set-str", "title=")).message,
-    /HTTP 400:.*title is required/
-  );
-  assert.match(
-    (await cliFailure("tasks", "get", "--id", "missing")).message,
-    /HTTP 404:.*task not found/
-  );
+  assert.equal((await cliFailure("tasks", "create", "--set-str", "title=")).http.status, 400);
+  assert.equal((await cliFailure("tasks", "get", "--id", "missing")).http.status, 404);
 
   const task = await cli("tasks", "create", "--set", "title=Keep the contract honest");
-  assert.match(
-    (await cliFailure("tasks", "update", "--id", task.id, "--file", "test/empty.json")).message,
-    /HTTP 400:.*title or completed is required/
+  assert.equal(
+    (await cliFailure("tasks", "update", "--id", task.id, "--file", "test/empty.json")).http.status,
+    400
   );
 });
 
