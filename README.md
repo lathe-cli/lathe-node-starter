@@ -4,7 +4,7 @@ A minimal Node.js application where the CLI is ready on day one. Clone it, build
 
 ## Start
 
-Requires Node.js 24+, pnpm 10+, and Go 1.25+.
+Requires Node.js 24+, pnpm 10+, and Go 1.26+.
 
 ```sh
 pnpm install
