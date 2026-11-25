@@ -42,6 +42,23 @@ When an API feature changes:
 3. Run `pnpm check`.
 4. Commit the regenerated `internal/generated/` and `skills/appctl/` output with the feature.
 
+## Application versioning
+
+This project follows [SemVer 2.0.0](https://semver.org/spec/v2.0.0.html), clauses 2, 3, 9, and 11, with these conventions:
+
+- The version core is `X.Y.Z`. Each component is a nonnegative integer without leading zeroes.
+- Prereleases use only `X.Y.Z-alpha.N`, `X.Y.Z-beta.N`, or `X.Y.Z-rc.N`. The number `N` starts at 1, without leading zeroes.
+- Core components compare numerically, from left to right. For the same core, precedence is `alpha < beta < rc < final`.
+- Prerelease numbers compare numerically. For example, `1.2.3-rc.2 < 1.2.3-rc.10 < 1.2.3`.
+- Published contents and tags are immutable. Release changes under a new version, without moving, reusing, renaming, or deleting published tags.
+- The application version source is `package.json` `version`. At the tagged commit, `v<semver>` must equal that version after removing `v`.
+
+Keep the generated `appctl` CLI in the application release unless it needs independent releases.
+For an independently released `appctl` CLI, use the fixed `appctl-v<semver>` prefix and its Git tag as its version source.
+Keep `v<semver>` for the application and keep the two version sequences separate.
+For each additional independent artifact, document its version source and a distinct fixed tag prefix before its first release.
+Tag prefixes are not part of version values. Keep build metadata and commit IDs separate from release versions.
+
 ## What is included
 
 - Dependency-free Node.js HTTP application
